@@ -1,0 +1,51 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package transfer;
+
+import java.io.Serializable;
+import transfer.util.ResponseStatus;
+
+/**
+ *
+ * @author jovan
+ */
+public class Odgovor implements Serializable {
+    private Object data;
+    private Exception exc;
+    private ResponseStatus responseStatus;
+
+    public Odgovor(Object data, Exception exc, ResponseStatus responseStatus) {
+        this.data = data;
+        this.exc = exc;
+        this.responseStatus = responseStatus;
+    }
+
+    public Odgovor() {
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public Exception getExc() {
+        return exc;
+    }
+
+    public void setExc(Exception exc) {
+        this.exc = exc;
+    }
+
+    public ResponseStatus getResponseStatus() {
+        return responseStatus;
+    }
+
+    public void setResponseStatus(ResponseStatus responseStatus) {
+        this.responseStatus = responseStatus;
+    }
+}

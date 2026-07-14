@@ -1,0 +1,15 @@
+# Build
+build/
+dist/
+
+# NetBeans
+nbproject/private/
+
+# Java
+*.class
+
+# Windows
+desktop.ini
+
+# Libraries
+*.jar
