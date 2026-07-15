@@ -12,26 +12,49 @@ import java.util.ArrayList;
  *
  * @author jovan
  */
-public class Knjiga extends AbstractDomainObject{
+public class Knjiga extends AbstractDomainObject {
+
     private long knjigaID;
     private String naziv;
     private String autor;
     private String opis;
     private double cena;
+    private String isbn;
+    private String izdavackaKuca;
 
-    public Knjiga(long knjigaID, String naziv, String autor, String opis, double cena) {
+    public Knjiga(long knjigaID, String naziv, String autor, String opis, double cena, String isbn, String izdavackaKuca) {
         this.knjigaID = knjigaID;
         this.naziv = naziv;
         this.autor = autor;
         this.opis = opis;
         this.cena = cena;
+        this.isbn = isbn;
+        this.izdavackaKuca = izdavackaKuca;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getIzdavackaKuca() {
+        return izdavackaKuca;
+    }
+
+    public void setIzdavackaKuca(String izdavackaKuca) {
+        this.izdavackaKuca = izdavackaKuca;
     }
 
     public Knjiga() {
     }
+
     public String toString() {
-        return naziv + " (Autor: " + autor+")";
+        return naziv + " (Autor: " + autor + ")";
     }
+
     @Override
     public String nazivTabele() {
         return " Knjiga ";
@@ -49,11 +72,17 @@ public class Knjiga extends AbstractDomainObject{
 
     @Override
     public ArrayList<AbstractDomainObject> vratiListu(ResultSet rs) throws SQLException {
-           ArrayList<AbstractDomainObject> lista = new ArrayList<>();
-           
-           while (rs.next()) {
-           Knjiga k=new Knjiga(rs.getLong("knjigaID"), rs.getString("naziv"), rs.getString("autor"),
-                   rs.getString("opis"), rs.getDouble("cena"));
+        ArrayList<AbstractDomainObject> lista = new ArrayList<>();
+
+        while (rs.next()) {
+            Knjiga k = new Knjiga(
+                    rs.getLong("knjigaID"),
+                    rs.getString("naziv"),
+                    rs.getString("autor"),
+                    rs.getString("opis"),
+                    rs.getDouble("cena"),
+                    rs.getString("isbn"),
+                    rs.getString("izdavackaKuca"));
 
             lista.add(k);
         }
@@ -64,23 +93,28 @@ public class Knjiga extends AbstractDomainObject{
 
     @Override
     public String koloneZaInsert() {
-        return "(naziv, autor, opis, cena)";
+        return "(naziv, autor, opis, cena, isbn, izdavackaKuca)";
     }
 
     @Override
     public String vrednostiZaInsert() {
-        return "'" + naziv +  "', '" + autor + "', '" + opis + "', '" + cena + "'";
+        return "'" + naziv + "', '" + autor + "', '" + opis + "', "
+                + cena + ", '" + isbn + "', '" + izdavackaKuca + "'";
     }
 
     @Override
     public String vrednostiZaUpdate() {
-         return " naziv = '" + naziv + "', autor = '" + autor + "', opis = '" + opis + "', "
-                + "cena = " + cena + " ";
+        return " naziv = '" + naziv
+                + "', autor = '" + autor
+                + "', opis = '" + opis
+                + "', cena = " + cena
+                + ", isbn = '" + isbn
+                + "', izdavackaKuca = '" + izdavackaKuca + "' ";
     }
 
     @Override
     public String uslov() {
-        return " KnjigaId = "+knjigaID;
+        return " KnjigaId = " + knjigaID;
     }
 
     @Override
@@ -127,5 +161,5 @@ public class Knjiga extends AbstractDomainObject{
     public void setCena(double cena) {
         this.cena = cena;
     }
-    
+
 }

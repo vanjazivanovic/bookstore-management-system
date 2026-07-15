@@ -20,6 +20,15 @@ public class StavkaRacuna extends AbstractDomainObject {
     private double cena;
     private double iznos;
     private Knjiga knjiga;
+    private StatusStavke status;
+
+    public StatusStavke getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusStavke status) {
+        this.status = status;
+    }
 
     public StavkaRacuna(Racun racun, int rb, int kolicina, double cena, double iznos, Knjiga knjiga) {
         this.racun = racun;
@@ -73,7 +82,7 @@ public class StavkaRacuna extends AbstractDomainObject {
 
             Knjiga knj = new Knjiga(rs.getLong("knjigaID"),
                     rs.getString("kn.naziv"), rs.getString("autor"), rs.getString("opis"),
-                    rs.getDouble("kn.cena"));
+                    rs.getDouble("kn.cena"), rs.getString("isbn"), rs.getString("izdavackaKuca"));
 
             StavkaRacuna sr = new StavkaRacuna(r, rs.getInt("rb"),
                     rs.getInt("kolicina"), rs.getDouble("cena"), rs.getDouble("iznos"), knj);
@@ -97,13 +106,17 @@ public class StavkaRacuna extends AbstractDomainObject {
     }
 
     @Override
+  
     public String vrednostiZaUpdate() {
-         return "";
+        return "kolicina = " + kolicina
+                + ", cena = " + cena
+                + ", iznos = " + iznos
+                + ", knjigaID = " + knjiga.getKnjigaID();
     }
 
-    @Override
     public String uslov() {
-        return "racunID = "+racun.getRacunID();
+        return "racunID = " + racun.getRacunID()
+                + " AND rb = " + rb;
     }
 
     @Override

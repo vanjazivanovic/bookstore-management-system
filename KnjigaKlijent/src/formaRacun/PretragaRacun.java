@@ -158,16 +158,7 @@ public class PretragaRacun extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDetaljiActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int odgovor = JOptionPane.showConfirmDialog(
-                this,
-                "Da li želite da zatvorite prozor?",
-                "Potvrda",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-
-        if (odgovor == JOptionPane.YES_OPTION) {
-            dispose();
-        }
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

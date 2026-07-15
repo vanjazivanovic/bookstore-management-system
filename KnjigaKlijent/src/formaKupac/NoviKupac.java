@@ -207,7 +207,7 @@ public class NoviKupac extends javax.swing.JDialog {
             KlijentKontroler.getInstance().kreirajKupca(k);
             JOptionPane.showMessageDialog(
                     this,
-                    "Kupac"  + k.getIme() + " je uspešno dodat.",
+                    "Kupac " + k.getIme() + " je uspešno dodat.",
                     "Uspešno",
                     JOptionPane.INFORMATION_MESSAGE
             );
@@ -215,14 +215,22 @@ public class NoviKupac extends javax.swing.JDialog {
             kf.popuniKupce();
             this.dispose();
         } catch (Exception ex) {
-            ex.printStackTrace();
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Kupca nije moguće sačuvati.",
-                    "Greška",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            if (ex.getMessage().contains("Duplicate entry")) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Kupac sa unetom e-mail adresom već postoji u sistemu.\n"
+                        + "Unesite drugu e-mail adresu.",
+                        "Dodavanje kupca nije moguće",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            } else {
+                JOptionPane.showMessageDialog(
+                        this,
+                        ex.getMessage(),
+                        "Greška",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
         }
 
     }//GEN-LAST:event_btnDodajKupcaActionPerformed

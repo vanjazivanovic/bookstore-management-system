@@ -6,6 +6,7 @@ package formaRacun;
 
 import domain.Knjiga;
 import domain.Racun;
+import domain.StatusStavke;
 import domain.StavkaRacuna;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +55,9 @@ public class DetaljiRacuna extends javax.swing.JDialog {
         txtUkupanIznos.setText(String.valueOf(r.getUkupanIznos()));
         txtUkupanIznos.setEditable(false);
         txtCena.setEditable(false);
+        for (StavkaRacuna s : r.getStavkeRacuna()) {
+               s.setStatus(StatusStavke.NEPROMENJENA);
+            }
         tblStavkeRacuna.setModel(new ModelTabeleStavkaRacuna(r.getStavkeRacuna()));
 
     }
@@ -389,7 +393,7 @@ public class DetaljiRacuna extends javax.swing.JDialog {
         double cena = Double.parseDouble(txtCena.getText());
 
         StavkaRacuna sr = new StavkaRacuna(null, -1, kolicina, knjiga.getCena(), cena, knjiga);
-
+        sr.setStatus(StatusStavke.NOVA);
         ModelTabeleStavkaRacuna mt = (ModelTabeleStavkaRacuna) tblStavkeRacuna.getModel();
         mt.dodajStavku(sr);
         txtKolicina.setText("");
@@ -425,17 +429,7 @@ public class DetaljiRacuna extends javax.swing.JDialog {
     }//GEN-LAST:event_btnObrisiStavkuActionPerformed
 
     private void btnZatvrotiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZatvrotiActionPerformed
-        int odgovor = JOptionPane.showConfirmDialog(
-                this,
-                "Da li želite da zatvorite prozor?",
-                "Potvrda",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
-
-        if (odgovor == JOptionPane.YES_OPTION) {
-            dispose();
-        }
+       this.dispose();
     }//GEN-LAST:event_btnZatvrotiActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
@@ -474,6 +468,7 @@ public class DetaljiRacuna extends javax.swing.JDialog {
         try {
             racun.setUkupanIznos(ukupanIznos);
             ModelTabeleStavkaRacuna mt = (ModelTabeleStavkaRacuna) tblStavkeRacuna.getModel();
+            
             racun.setStavkeRacuna(mt.getLista());
 
             KlijentKontroler.getInstance().promeniRacun(racun);

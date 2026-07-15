@@ -14,33 +14,49 @@ import so.AbstractSO;
  *
  * @author jovan
  */
-public class SOPromeniRacun extends AbstractSO{
-    
+public class SOPromeniRacun extends AbstractSO {
+
     @Override
     protected void validate(AbstractDomainObject ado) throws Exception {
-         if (!(ado instanceof Racun)) {
+        if (!(ado instanceof Racun)) {
             throw new Exception("Prosledjeni objekat nije instanca klase Racun!");
         }
-         Racun r=(Racun) ado;
-         
-         if (r.getStavkeRacuna().isEmpty()) {
+        Racun r = (Racun) ado;
+
+        if (r.getStavkeRacuna().isEmpty()) {
             throw new Exception("Racun mora imati barem jednu stavku!");
         }
     }
 
     @Override
+
     protected void execute(AbstractDomainObject ado) throws Exception {
-         DBBroker.getInstance().update(ado);
-         
-         Racun r=(Racun) ado;
-         StavkaRacuna s=new StavkaRacuna();
-         s.setRacun(r);
-         DBBroker.getInstance().delete(s);
-         
-         for (StavkaRacuna stavkaRacuna : r.getStavkeRacuna()) {
-             stavkaRacuna.setRacun(r);
-            DBBroker.getInstance().insert(stavkaRacuna);
+
+        DBBroker.getInstance().update(ado);
+
+        Racun r = (Racun) ado;
+
+        for (StavkaRacuna sr : r.getStavkeRacuna()) {
+
+            switch (sr.getStatus()) {
+
+                case NOVA:
+                    sr.setRacun(r);
+                    DBBroker.getInstance().insert(sr);
+                    break;
+
+                case IZMENJENA:
+                    DBBroker.getInstance().update(sr);
+                    break;
+
+                case OBRISANA:
+                    DBBroker.getInstance().delete(sr);
+                    break;
+
+                case NEPROMENJENA:
+                    break;
+            }
         }
     }
-    
+
 }

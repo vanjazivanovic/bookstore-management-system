@@ -1,7 +1,5 @@
 package modeli;
 
-
-
 import domain.Knjiga;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -13,30 +11,35 @@ import kontoler.KlijentKontroler;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author jovan
  */
-public class ModelTabeleKnjiga extends AbstractTableModel implements Runnable{
+public class ModelTabeleKnjiga extends AbstractTableModel implements Runnable {
+
     private ArrayList<Knjiga> lista;
-    private String[] kolone ={"ID","Naziv", "Autor"};
-     private String parametar = "";
+    private String[] kolone = {
+        "ID",
+        "Naziv",
+        "Autor",
+        "ISBN",
+        "Izdavačka kuća"
+    };
+    private String parametar = "";
 
     public void setParametar(String parametar) {
         this.parametar = parametar;
         refresujTabelu();
     }
-     
- 
-    public ModelTabeleKnjiga(){
+
+    public ModelTabeleKnjiga() {
         try {
-            lista=KlijentKontroler.getInstance().getAllKnjige();
+            lista = KlijentKontroler.getInstance().getAllKnjige();
         } catch (Exception ex) {
             Logger.getLogger(ModelTabeleKnjiga.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   
+
     @Override
     public int getRowCount() {
         return lista.size();
@@ -44,20 +47,28 @@ public class ModelTabeleKnjiga extends AbstractTableModel implements Runnable{
 
     @Override
     public int getColumnCount() {
-          return kolone.length;
+        return kolone.length;
     }
-public String getColumnName(int i) {
+
+    public String getColumnName(int i) {
         return kolone[i];
     }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         Knjiga k = lista.get(rowIndex);
+        Knjiga k = lista.get(rowIndex);
 
         switch (columnIndex) {
-            case 0: return k.getKnjigaID();
-            case 1: return k.getNaziv();
-            case 2: return k.getAutor();
-           
+            case 0:
+                return k.getKnjigaID();
+            case 1:
+                return k.getNaziv();
+            case 2:
+                return k.getAutor();
+            case 3:
+                return k.getIsbn();
+            case 4:
+                return k.getIzdavackaKuca();
 
             default:
                 return null;
@@ -66,7 +77,7 @@ public String getColumnName(int i) {
 
     @Override
     public void run() {
-         try {
+        try {
             while (!Thread.currentThread().isInterrupted()) {
                 Thread.sleep(10000);
                 refresujTabelu();
@@ -77,16 +88,24 @@ public String getColumnName(int i) {
     }
 
     public void refresujTabelu() {
-         try {
+        try {
             lista = KlijentKontroler.getInstance().getAllKnjige();
             if (!parametar.equals("")) {
                 ArrayList<Knjiga> novaLista = new ArrayList<>();
+
                 for (Knjiga k : lista) {
-                    if (k.getNaziv().toLowerCase().contains(parametar.toLowerCase())
-                            ) {
+
+                    String p = parametar.toLowerCase();
+
+                    if (k.getNaziv().toLowerCase().contains(p)
+                            || k.getAutor().toLowerCase().contains(p)
+                            || k.getIsbn().toLowerCase().contains(p)
+                            || k.getIzdavackaKuca().toLowerCase().contains(p)) {
+
                         novaLista.add(k);
                     }
                 }
+
                 lista = novaLista;
             }
 
@@ -101,7 +120,4 @@ public String getColumnName(int i) {
         return lista.get(row);
     }
 
-    
-    
-    
 }
