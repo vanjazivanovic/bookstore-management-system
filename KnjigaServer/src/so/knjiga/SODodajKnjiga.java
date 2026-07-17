@@ -33,8 +33,7 @@ public class SODodajKnjiga extends AbstractSO {
                 throw new Exception("Knjiga sa tim nazivom i autorom vec postoji!");
             }
 
-            System.out.println("ISBN iz baze: " + knjiga.getIsbn());
-            System.out.println("ISBN nove knjige: " + k.getIsbn());
+            
 
             if (knjiga.getIsbn() != null
                     && k.getIsbn() != null
