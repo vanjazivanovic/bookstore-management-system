@@ -21,6 +21,19 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JTextField;
 import util.PlaceholderUtil;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.jasperreports.engine.JRPrintPage;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -56,8 +69,8 @@ public class DetaljiRacuna extends javax.swing.JDialog {
         txtUkupanIznos.setEditable(false);
         txtCena.setEditable(false);
         for (StavkaRacuna s : r.getStavkeRacuna()) {
-               s.setStatus(StatusStavke.NEPROMENJENA);
-            }
+            s.setStatus(StatusStavke.NEPROMENJENA);
+        }
         tblStavkeRacuna.setModel(new ModelTabeleStavkaRacuna(r.getStavkeRacuna()));
 
     }
@@ -94,6 +107,7 @@ public class DetaljiRacuna extends javax.swing.JDialog {
         btnZatvroti = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
         btnIzmeni = new javax.swing.JButton();
+        btnStampaj = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -260,33 +274,43 @@ public class DetaljiRacuna extends javax.swing.JDialog {
             }
         });
 
+        btnStampaj.setText("ŠTAMPAJ RAČUN");
+        btnStampaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStampajActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDatum)
-                            .addComponent(cmbKupac, 0, 273, Short.MAX_VALUE)
-                            .addComponent(txtUkupanIznos))))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3))
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDatum)
+                                    .addComponent(cmbKupac, 0, 273, Short.MAX_VALUE)
+                                    .addComponent(txtUkupanIznos)))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(btnZatvroti)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnObrisi)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnIzmeni)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnStampaj)))
                 .addContainerGap(74, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(btnZatvroti)
-                .addGap(94, 94, 94)
-                .addComponent(btnObrisi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnIzmeni)
-                .addGap(76, 76, 76))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,7 +333,8 @@ public class DetaljiRacuna extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnZatvroti)
                     .addComponent(btnObrisi)
-                    .addComponent(btnIzmeni))
+                    .addComponent(btnIzmeni)
+                    .addComponent(btnStampaj))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -429,7 +454,7 @@ public class DetaljiRacuna extends javax.swing.JDialog {
     }//GEN-LAST:event_btnObrisiStavkuActionPerformed
 
     private void btnZatvrotiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZatvrotiActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnZatvrotiActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
@@ -468,7 +493,7 @@ public class DetaljiRacuna extends javax.swing.JDialog {
         try {
             racun.setUkupanIznos(ukupanIznos);
             ModelTabeleStavkaRacuna mt = (ModelTabeleStavkaRacuna) tblStavkeRacuna.getModel();
-            
+
             racun.setStavkeRacuna(mt.getLista());
 
             KlijentKontroler.getInstance().promeniRacun(racun);
@@ -513,12 +538,66 @@ public class DetaljiRacuna extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtPretragaKnjigeKeyReleased
 
+    private void btnStampajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStampajActionPerformed
+
+        try {
+
+            InputStream report = getClass().getResourceAsStream("/report/Racun_Report.jasper");
+            if (report == null) {
+                System.out.println("REPORT NIJE PRONADJEN!");
+            } else {
+                System.out.println("REPORT UCITAN!");
+            }
+            System.out.println("Report = " + report);
+
+            Map<String, Object> params = new HashMap<>();
+            params.put(
+                    "SUBREPORT_DIR",
+                    getClass().getResource("/report/").toExternalForm()
+            );
+            System.out.println(params.get("SUBREPORT_DIR"));
+            params.put("racunID", racun.getRacunID());
+            params.put("datumIzdavanja", racun.getDatumIzdavanja());
+            params.put("kupac", racun.getKupac());
+            params.put("prodavac", racun.getProdavac());
+            params.put("ukupanIznos", racun.getUkupanIznos());
+
+            JRBeanCollectionDataSource ds
+                    = new JRBeanCollectionDataSource(
+                            java.util.Collections.singletonList(racun));
+
+            System.out.println("Broj stavki: " + racun.getStavkeRacuna().size());
+
+            for (StavkaRacuna s : racun.getStavkeRacuna()) {
+                System.out.println(
+                        s.getRb() + " | "
+                        + s.getKnjiga().getNaziv() + " | "
+                        + s.getKolicina()
+                );
+            }
+
+            JasperPrint jp = JasperFillManager.fillReport(report, params, ds);
+            System.out.println("Naziv reporta: " + jp.getName());
+            System.out.println("Sirina: " + jp.getPageWidth());
+            System.out.println("Visina: " + jp.getPageHeight());
+            System.out.println("Pages: " + jp.getPages().size());
+            System.out.println(jp.getPages().get(0).getElements().size());
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_btnStampajActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajStavku;
     private javax.swing.JButton btnIzmeni;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnObrisiStavku;
+    private javax.swing.JButton btnStampaj;
     private javax.swing.JButton btnZatvroti;
     private javax.swing.JComboBox cmbKnjiga;
     private javax.swing.JComboBox cmbKupac;

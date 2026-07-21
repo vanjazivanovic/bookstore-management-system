@@ -1,0 +1,127 @@
+<!-- Created with Jaspersoft Studio version 7.0.6.final using JasperReports Library version 7.0.6-5d2a603fdc6b3db8f842a83383e594f41891534d  -->
+<jasperReport name="Racun_Subreport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b6052598-ce3c-4579-b13b-ef6f89139445">
+	<query language="sql"><![CDATA[]]></query>
+	<field name="rb" class="java.lang.Integer"/>
+	<field name="knjiga" class="domain.Knjiga"/>
+	<field name="kolicina" class="java.lang.Integer"/>
+	<field name="cena" class="java.lang.Double"/>
+	<field name="iznos" class="java.lang.Double"/>
+	<background splitType="Stretch"/>
+	<title splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</title>
+	<pageHeader splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</pageHeader>
+	<columnHeader height="110" splitType="Stretch">
+		<element kind="staticText" uuid="f105f392-e6bb-48d5-8344-b163d17fa8fd" mode="Opaque" x="0" y="80" width="30" height="20" backcolor="#E6E6E6" bold="true" hTextAlign="Center">
+			<text><![CDATA[RB]]></text>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+				<pen lineWidth="0.75"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="23cf5e37-ae0c-4945-af2a-4f20601c6bd3" mode="Opaque" x="30" y="80" width="180" height="20" backcolor="#E6E6E6" bold="true" hTextAlign="Center">
+			<text><![CDATA[Naziv knjige]]></text>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+				<pen lineWidth="0.75"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="daead98b-9647-4f27-97f7-66e971af8a7a" mode="Opaque" x="330" y="80" width="55" height="20" backcolor="#E6E6E6" bold="true" hTextAlign="Center">
+			<text><![CDATA[Količina]]></text>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+				<pen lineWidth="0.75"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="a75e91e1-ca0d-4195-8315-6a55feb720ba" mode="Opaque" x="455" y="80" width="80" height="20" backcolor="#E6E6E6" bold="true" hTextAlign="Right">
+			<text><![CDATA[Iznos]]></text>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+				<pen lineWidth="0.75"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="580d8b8c-8ed3-4721-aa7e-bb4a41a219ae" mode="Opaque" x="210" y="80" width="120" height="20" backcolor="#E6E6E6" bold="true" hTextAlign="Center">
+			<text><![CDATA[Autor]]></text>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+				<pen lineWidth="0.75"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="1eaee6fb-7d7d-4bd9-ba91-342fc90c7e71" mode="Opaque" x="385" y="80" width="70" height="20" backcolor="#E6E6E6" bold="true" hTextAlign="Right">
+			<text><![CDATA[Cena]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+				<pen lineWidth="0.75"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<element kind="textField" uuid="d21cfb20-b8c5-4eb4-9962-a5f6b13550d7" x="0" y="0" width="30" height="30" hTextAlign="Center">
+				<expression><![CDATA[$F{rb}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="5afefd0b-1b85-49b9-976f-19a81b8c13bb" x="30" y="0" width="180" height="30">
+				<expression><![CDATA[$F{knjiga}.getNaziv()]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="658a66cc-1cf6-41e8-89a8-8f0f9acd6852" x="210" y="0" width="120" height="30">
+				<expression><![CDATA[$F{knjiga}.getAutor()]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="bcd816eb-546a-468e-a7ec-61056f4a4591" x="330" y="0" width="55" height="30" hTextAlign="Center">
+				<expression><![CDATA[$F{kolicina}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="cb4e8375-b38e-4126-8688-f2a536577e6b" x="385" y="0" width="70" height="30" pattern="#,##0.00" hTextAlign="Right">
+				<expression><![CDATA[$F{cena}]]></expression>
+			</element>
+			<element kind="textField" uuid="7631d0cb-6fbf-4b28-aaed-2a5ea7a99746" x="455" y="0" width="80" height="30" pattern="#,##0.00" hTextAlign="Right">
+				<expression><![CDATA[$F{iznos}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</columnFooter>
+	<pageFooter splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</pageFooter>
+	<summary splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</summary>
+</jasperReport>
