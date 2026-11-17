@@ -223,68 +223,76 @@ import kontoler.KlijentKontroler;
     }//GEN-LAST:event_btnObrisiActionPerformed
 
     private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
-        try {
-            if (txtIme1.getText().isEmpty() || txtPrezime1.getText().isEmpty()
-                    || txtEmail1.getText().isEmpty()
-                    || txtTelefon1.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Popunite sva obavezna polja.",
-                        "Upozorenje",
-                        JOptionPane.WARNING_MESSAGE
-                );
-                return;
-            }
-            if (!txtEmail1.getText().trim().contains("@")) {
-
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Unesite ispravnu e-mail adresu.",
-                        "Upozorenje",
-                        JOptionPane.WARNING_MESSAGE
-                );
-
-                return;
-            }
-            if (!txtTelefon1.getText().trim().matches("\\d+")) {
-
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Telefon može sadržati samo cifre.",
-                        "Upozorenje",
-                        JOptionPane.WARNING_MESSAGE
-                );
-
-                return;
-            }
-            String email = txtEmail1.getText().trim();
-            String telefon = txtTelefon1.getText().trim();
-            Mesto mesto = (Mesto) cmbMesto1.getSelectedItem();
-
-            kupac.setEmail(email);
-            kupac.setTelefon(telefon);
-            kupac.setMesto(mesto);
-
-            KlijentKontroler.getInstance().promeniKupac(kupac);
-            PretragaKupca pk = (PretragaKupca) getParent();
-            pk.refresujTabelu();
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Podaci o kupcu su uspešno izmenjeni.",
-                    "Uspešno",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-            this.dispose();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                                  
+    try {
+        if (txtIme1.getText().isEmpty() || txtPrezime1.getText().isEmpty()
+                || txtEmail1.getText().isEmpty()
+                || txtTelefon1.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Podatke o kupcu nije moguće izmeniti.",
-                    "Greška",
-                    JOptionPane.ERROR_MESSAGE
+                    "Popunite sva obavezna polja.",
+                    "Upozorenje",
+                    JOptionPane.WARNING_MESSAGE
             );
+            return;
         }
+
+        if (!txtEmail1.getText().trim().contains("@")) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Unesite ispravnu e-mail adresu.",
+                    "Upozorenje",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        if (!txtTelefon1.getText().trim().matches("\\d+")) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Telefon može sadržati samo cifre.",
+                    "Upozorenje",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        String email = txtEmail1.getText().trim();
+        String telefon = txtTelefon1.getText().trim();
+        Mesto mesto = (Mesto) cmbMesto1.getSelectedItem();
+
+        kupac.setEmail(email);
+        kupac.setTelefon(telefon);
+        kupac.setMesto(mesto);
+
+        KlijentKontroler.getInstance().promeniKupac(kupac);
+
+        PretragaKupca pk = (PretragaKupca) getParent();
+        pk.refresujTabelu();
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Sistem je zapamtio kupca.",
+                "Uspešno",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        this.dispose();
+
+    } catch (Exception ex) {
+        ex.printStackTrace();
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Podaci o kupcu nije moguće izmeniti!",
+                "Greška",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
+
     }//GEN-LAST:event_btnIzmeniActionPerformed
 
 

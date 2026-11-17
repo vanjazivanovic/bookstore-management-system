@@ -111,7 +111,7 @@ public class ModelTabeleStavkaRacuna extends AbstractTableModel {
         return ukupanIznos;
     }
 
-    private void osveziPrikaz() {
+    public void osveziPrikaz() {
 
         prikaz = new ArrayList<>();
 

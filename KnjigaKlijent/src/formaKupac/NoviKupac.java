@@ -207,7 +207,7 @@ public class NoviKupac extends javax.swing.JDialog {
             KlijentKontroler.getInstance().kreirajKupca(k);
             JOptionPane.showMessageDialog(
                     this,
-                    "Kupac " + k.getIme() + " je uspešno dodat.",
+                    "Sistem je zapamtio kupca",
                     "Uspešno",
                     JOptionPane.INFORMATION_MESSAGE
             );

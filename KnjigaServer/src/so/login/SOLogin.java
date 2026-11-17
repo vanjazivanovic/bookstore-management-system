@@ -26,7 +26,7 @@ public class SOLogin extends AbstractSO{
         Prodavac p=(Prodavac) ado;
         for (Prodavac prodavac : ServerKontroler.getInstance().getUlogovaniZaposleni()) {
             if(prodavac.getUsername().equals(p.getUsername())){
-             throw new Exception("Ovaj zaposleni je vec ulogovan na sistem!");
+             throw new Exception("Ovaj zaposleni je već ulogovan na sistem!");
             }
         }
     }
@@ -45,7 +45,7 @@ public class SOLogin extends AbstractSO{
             
             }
         }
-        throw new Exception("Korisnicko ime i sifra nisu ispravni.");
+        throw new Exception("Korisničko ime i šifra nisu ispravni.");
     }
 
     public Prodavac getUlogovani() {

@@ -51,7 +51,7 @@ public class LoginForma extends javax.swing.JFrame {
 
         txtUsername.setText("vanja");
 
-        txtPassword.setText("vanja");
+        txtPassword.setText("vanja123");
 
         btnLogin.setForeground(new java.awt.Color(0, 102, 102));
         btnLogin.setText("LOGIN");
@@ -149,7 +149,7 @@ public class LoginForma extends javax.swing.JFrame {
             Sesija.getInstance().setUlogovani(prodavac);
             JOptionPane.showMessageDialog(
                     this,
-                    "Uspešno ste se prijavili.",
+                    "Korisničko ime i šifra su ispravni.",
                     "Uspešno",
                     JOptionPane.INFORMATION_MESSAGE
             );

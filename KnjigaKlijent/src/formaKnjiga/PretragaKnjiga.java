@@ -6,6 +6,7 @@ package formaKnjiga;
 
 import domain.Knjiga;
 import modeli.ModelTabeleKnjiga;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,6 +42,7 @@ public class PretragaKnjiga extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblKnjige = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        btnPretrazi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -72,12 +74,19 @@ public class PretragaKnjiga extends javax.swing.JDialog {
             }
         });
 
+        btnPretrazi.setText("PRETRAŽI");
+        btnPretrazi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretraziActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(169, 169, 169)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -85,10 +94,12 @@ public class PretragaKnjiga extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPretrazi))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -97,8 +108,9 @@ public class PretragaKnjiga extends javax.swing.JDialog {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPretrazi))
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -109,17 +121,49 @@ public class PretragaKnjiga extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPretragaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPretragaKeyReleased
-        String param = txtPretraga.getText();
-        ModelTabeleKnjiga mt = (ModelTabeleKnjiga) tblKnjige.getModel();
-        mt.setParametar(param);
+        
     }//GEN-LAST:event_txtPretragaKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int row=tblKnjige.getSelectedRow();
-        ModelTabeleKnjiga mt=(ModelTabeleKnjiga) tblKnjige.getModel();
-        Knjiga k=mt.vratiKnjigu(row);
+        int row = tblKnjige.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Izaberite knjigu.",
+                    "Upozorenje",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        ModelTabeleKnjiga mt = (ModelTabeleKnjiga) tblKnjige.getModel();
+        Knjiga k = mt.vratiKnjigu(row);
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Knjiga je uspešno pronađena.",
+                "Uspešno",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
         new DetaljiKnjiga(this, true, k).setVisible(true);
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnPretraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraziActionPerformed
+        String param = txtPretraga.getText().trim();
+
+    ModelTabeleKnjiga mt = (ModelTabeleKnjiga) tblKnjige.getModel();
+    mt.setParametar(param);
+
+    JOptionPane.showMessageDialog(
+            this,
+            "Knjige su uspešno pronađene.",
+            "Uspešno",
+            JOptionPane.INFORMATION_MESSAGE
+    );
+    }//GEN-LAST:event_btnPretraziActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,6 +208,7 @@ public class PretragaKnjiga extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPretrazi;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -171,7 +216,7 @@ public class PretragaKnjiga extends javax.swing.JDialog {
     private javax.swing.JTextField txtPretraga;
     // End of variables declaration//GEN-END:variables
     void refresujTabalu() {
-        ModelTabeleKnjiga mt=(ModelTabeleKnjiga) tblKnjige.getModel();
+        ModelTabeleKnjiga mt = (ModelTabeleKnjiga) tblKnjige.getModel();
         mt.refresujTabelu();
     }
 

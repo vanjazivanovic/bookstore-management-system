@@ -543,12 +543,7 @@ public class DetaljiRacuna extends javax.swing.JDialog {
         try {
 
             InputStream report = getClass().getResourceAsStream("/report/Racun_Report.jasper");
-            if (report == null) {
-                System.out.println("REPORT NIJE PRONADJEN!");
-            } else {
-                System.out.println("REPORT UCITAN!");
-            }
-            System.out.println("Report = " + report);
+           
 
             Map<String, Object> params = new HashMap<>();
             params.put(
@@ -568,21 +563,9 @@ public class DetaljiRacuna extends javax.swing.JDialog {
 
             System.out.println("Broj stavki: " + racun.getStavkeRacuna().size());
 
-            for (StavkaRacuna s : racun.getStavkeRacuna()) {
-                System.out.println(
-                        s.getRb() + " | "
-                        + s.getKnjiga().getNaziv() + " | "
-                        + s.getKolicina()
-                );
-            }
-
+            
             JasperPrint jp = JasperFillManager.fillReport(report, params, ds);
-            System.out.println("Naziv reporta: " + jp.getName());
-            System.out.println("Sirina: " + jp.getPageWidth());
-            System.out.println("Visina: " + jp.getPageHeight());
-            System.out.println("Pages: " + jp.getPages().size());
-            System.out.println(jp.getPages().get(0).getElements().size());
-
+           
             JasperViewer.viewReport(jp, false);
 
         } catch (Exception ex) {

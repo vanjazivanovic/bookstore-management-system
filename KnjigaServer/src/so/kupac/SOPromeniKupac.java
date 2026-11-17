@@ -28,10 +28,10 @@ public class SOPromeniKupac extends AbstractSO{
         for (Kupac kupac : kupci) {
             if (kupac.getKupacID()!=(k.getKupacID())) {
                 if (kupac.getEmail().equals(k.getEmail())) {
-                    throw new Exception("Kupac sa tim emailom vec postoji!");
+                    throw new Exception("Kupac sa tim emailom već postoji!");
                 }
                 if (kupac.getTelefon().equals(k.getTelefon())) {
-                    throw new Exception("Kupac sa tim telefonom vec postoji!");
+                    throw new Exception("Kupac sa tim telefonom već postoji!");
                 }
             }
         }

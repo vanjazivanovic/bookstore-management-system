@@ -52,6 +52,7 @@ public class PretragaRacun extends javax.swing.JDialog {
         tblKupci = new javax.swing.JTable();
         btnDetalji = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnPretrazi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -91,28 +92,38 @@ public class PretragaRacun extends javax.swing.JDialog {
             }
         });
 
+        btnPretrazi.setText("PRETRAŽI");
+        btnPretrazi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretraziActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(54, 54, 54)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(54, 54, 54)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPretrazi))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(260, 260, 260)
                         .addComponent(btnDetalji, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(301, 301, 301)
                         .addComponent(jButton1)))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,50 +131,102 @@ public class PretragaRacun extends javax.swing.JDialog {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPretrazi))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDetalji, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPretragaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPretragaKeyReleased
-        String param = txtPretraga.getText();
-        ModelTabeleRacun mt = (ModelTabeleRacun) tblKupci.getModel();
-        mt.setParametar(param);
+
 
     }//GEN-LAST:event_txtPretragaKeyReleased
 
     private void btnDetaljiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetaljiActionPerformed
-        int row = tblKupci.getSelectedRow();
-        if (row >= 0) {
+                                         
+    int row = tblKupci.getSelectedRow();
+
+    if (row >= 0) {
+        try {
             ModelTabeleRacun mt = (ModelTabeleRacun) tblKupci.getModel();
             Racun r = mt.vratiIzabranRacun(row);
 
-            new DetaljiRacuna(this, true, r).setVisible(true);
-        } else {
             JOptionPane.showMessageDialog(
                     this,
-                    "Izaberite račun iz tabele.",
-                    "Upozorenje",
-                    JOptionPane.WARNING_MESSAGE
+                    "Sistem je pronašao račun.",
+                    "Detalji računa",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            new DetaljiRacuna(this, true, r).setVisible(true);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Sistem ne može da pronađe izabrani račun.",
+                    "Detalji računa",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
+    } else {
+        JOptionPane.showMessageDialog(
+                this,
+                "Izaberite račun iz tabele.",
+                "Upozorenje",
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
     }//GEN-LAST:event_btnDetaljiActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnPretraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraziActionPerformed
+
+        String param = txtPretraga.getText().trim();
+
+        ModelTabeleRacun mt = (ModelTabeleRacun) tblKupci.getModel();
+        mt.setParametar(param);
+
+        if (param.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Unesite ime ili prezime kupca.",
+                    "Pretraga racuna",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        } else if (mt.getLista().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Sistem ne može da nadje računе po zadatim kriterijumima.",
+                    "Pretraga računa",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Sistem je pronašao račune po zadatim kriterijumima.",
+                    "Pretraga računa",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+
+
+    }//GEN-LAST:event_btnPretraziActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetalji;
+    private javax.swing.JButton btnPretrazi;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

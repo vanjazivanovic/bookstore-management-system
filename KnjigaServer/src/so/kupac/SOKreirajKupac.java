@@ -27,15 +27,15 @@ public class SOKreirajKupac extends AbstractSO{
 
         for (Kupac kupac : kupci) {
             if (kupac.getEmail().equals(k.getEmail())) {
-                throw new Exception("Kupac sa tim emailom vec postoji!");
+                throw new Exception("Kupac sa tim emailom već postoji!");
             }
             if (kupac.getTelefon().equals(k.getTelefon())) {
-                throw new Exception("Kupac sa tim telefonom vec postoji!");
+                throw new Exception("Kupac sa tim telefonom već postoji!");
             }
            
     }
              if(k.getTelefon().length()!=10){
-            throw new Exception("Format telefona nije ispravan, mora da sadrzi tacno 10 cifara");
+            throw new Exception("Format telefona nije ispravan, mora da sadrži tačno 10 cifara");
             }
             if (!k.getEmail().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
         throw new Exception("Email format nije ispravan! Primer: korisnik@gmail.com");

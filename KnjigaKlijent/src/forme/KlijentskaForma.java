@@ -46,20 +46,76 @@ public class KlijentskaForma extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Knjižara - Novi račun");
+
         this.ulogovani = Sesija.getInstance().getUlogovani();
         lblUlogovani.setText(ulogovani.toString());
-        popuniKupce();
-        popuniKnjige();
-        PlaceholderUtil.postaviPlaceholder(txtPretragaKupca, "Unesite ime ili prezime...");
-        PlaceholderUtil.postaviPlaceholder(txtPretragaKnjige, "Unesite naziv ili autora...");
+
+        // Učitavanje kupaca i knjiga u pozadinskoj niti
+        new Thread(() -> {
+            try {
+                ArrayList<Kupac> kupci
+                        = KlijentKontroler.getInstance().getAllKupac();
+
+                ArrayList<Knjiga> knjige
+                        = KlijentKontroler.getInstance().getAllKnjige();
+
+                javax.swing.SwingUtilities.invokeLater(() -> {
+
+                    // Popunjavanje kupaca
+                    sviKupci = kupci;
+                    cmbKupac.removeAllItems();
+
+                    for (Kupac k : sviKupci) {
+                        cmbKupac.addItem(k);
+                    }
+
+                    // Popunjavanje knjiga
+                    sveKnjige = knjige;
+                    cmbKnjiga.removeAllItems();
+
+                    for (Knjiga k : sveKnjige) {
+                        cmbKnjiga.addItem(k);
+                    }
+                });
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }).start();
+
+        PlaceholderUtil.postaviPlaceholder(
+                txtPretragaKupca,
+                "Unesite ime ili prezime..."
+        );
+
+        PlaceholderUtil.postaviPlaceholder(
+                txtPretragaKnjige,
+                "Unesite naziv ili autora..."
+        );
+
         txtCena.setEditable(false);
         txtUkupanIznos.setEditable(false);
-        tblStavkeRacuna.setModel(new ModelTabeleStavkaRacuna());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+        tblStavkeRacuna.setModel(
+                new ModelTabeleStavkaRacuna()
+        );
+
+        SimpleDateFormat sdf
+                = new SimpleDateFormat("dd.MM.yyyy");
+
         txtDatum.setText(sdf.format(new Date()));
-        btnDodajStavku.setToolTipText("Dodaje novu stavku računa");
-        btnSAcuvaj.setToolTipText("Čuva novi račun");
-        btnOdjava.setToolTipText("Odjava iz sistema");
+
+        btnDodajStavku.setToolTipText(
+                "Dodaje novu stavku računa"
+        );
+
+        btnSAcuvaj.setToolTipText(
+                "Čuva novi račun"
+        );
+
+        btnOdjava.setToolTipText(
+                "Odjava iz sistema"
+        );
 
     }
 
@@ -300,7 +356,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDodajStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnObrisiStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -332,10 +388,6 @@ public class KlijentskaForma extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(246, 246, 246)
-                .addComponent(btnSAcuvaj, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
@@ -360,6 +412,10 @@ public class KlijentskaForma extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel13)
                 .addGap(107, 107, 107))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(247, 247, 247)
+                .addComponent(btnSAcuvaj, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,13 +435,11 @@ public class KlijentskaForma extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(61, 61, 61)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSAcuvaj, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtUkupanIznos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUkupanIznos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSAcuvaj, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -474,14 +528,13 @@ public class KlijentskaForma extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUlogovani)
                     .addComponent(jLabel10)
                     .addComponent(btnOdjava))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -585,17 +638,26 @@ public class KlijentskaForma extends javax.swing.JFrame {
 
             txtDatum.setText("");
             txtUkupanIznos.setText("");
+            txtKolicina.setText("");
+            txtCena.setText("");
+            txtPretragaKupca.setText("");
+            txtPretragaKnjige.setText("");
+
             ukupanIznos = 0;
+
             mt.getLista().clear();
+            mt.osveziPrikaz();
             mt.fireTableDataChanged();
+
             JOptionPane.showMessageDialog(
                     this,
-                    "Račun je uspešno sačuvan.",
+                    "Sistem je zapamtio račun.",
                     "Uspešno",
                     JOptionPane.INFORMATION_MESSAGE
             );
 
             txtDatum.setText(sdf.format(new Date()));
+
             osveziKupce(null);
             osveziKnjige(null);
         } catch (Exception ex) {
@@ -659,6 +721,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
             );
             return;
         }
+
         Knjiga knjiga = (Knjiga) cmbKnjiga.getSelectedItem();
         int kolicina = Integer.parseInt(txtKolicina.getText());
         double cena = Double.parseDouble(txtCena.getText());
@@ -670,7 +733,11 @@ public class KlijentskaForma extends javax.swing.JFrame {
 
         ukupanIznos = mt.vratiUkupanIznos();
         txtUkupanIznos.setText(String.valueOf(ukupanIznos) + "din");
+
+        txtKolicina.setText("");
+
         osveziKnjige(knjiga);
+
     }//GEN-LAST:event_btnDodajStavkuActionPerformed
 
     private void txtKolicinaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKolicinaKeyReleased

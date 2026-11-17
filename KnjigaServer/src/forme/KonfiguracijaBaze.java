@@ -146,7 +146,7 @@ public class KonfiguracijaBaze extends javax.swing.JDialog {
 
             prop.store(out, null);
 
-            JOptionPane.showMessageDialog(this, "Uspesno sacuvana konfiguracija.");
+            JOptionPane.showMessageDialog(this, "Uspešno sačuvana konfiguracija.");
             this.dispose();
 
         } catch (IOException ex) {

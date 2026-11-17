@@ -15,7 +15,7 @@ public class SOKreirajKupacTest extends TestBase {
     public void saveSuccessTest() throws Exception {
 
         long vreme = System.currentTimeMillis();
-        String telefon = "061234" + (int) (Math.random() * 10000);
+        String telefon = "061694" + (int) (Math.random() * 10000);
         Kupac kupac = new Kupac(
                 0,
                 "JUnit",

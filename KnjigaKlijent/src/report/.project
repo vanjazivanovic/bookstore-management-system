@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>report</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Invoice_Report.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/HP/Downloads/jasper-reports 21/jasper-reports/Application/report/Invoice_Report.jrxml</location>
+		</link>
+		<link>
+			<name>Invoice_Subreport.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/HP/Downloads/jasper-reports 21/jasper-reports/Application/report/Invoice_Subreport.jrxml</location>
+		</link>
+	</linkedResources>
+</projectDescription>

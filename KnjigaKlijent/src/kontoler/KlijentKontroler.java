@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kontoler;
 
 import domain.Knjiga;
@@ -11,7 +7,6 @@ import domain.Prodavac;
 import domain.Racun;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import sesija.Sesija;
 import transfer.Odgovor;
@@ -19,15 +14,25 @@ import transfer.Zahtev;
 import transfer.util.Operacije;
 import transfer.util.ResponseStatus;
 
-/**
- *
- * @author jovan
- */
 public class KlijentKontroler {
 
     private static KlijentKontroler instance;
 
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
+
     private KlijentKontroler() {
+        try {
+            out = new ObjectOutputStream(
+                    Sesija.getInstance().getSocket().getOutputStream());
+            out.flush();
+
+            in = new ObjectInputStream(
+                    Sesija.getInstance().getSocket().getInputStream());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static KlijentKontroler getInstance() {
@@ -37,30 +42,28 @@ public class KlijentKontroler {
         return instance;
     }
 
+    private synchronized Object sendRequest(int operation, Object data) throws Exception {
+
+        Zahtev request = new Zahtev(operation, data);
+
+        out.writeObject(request);
+        out.flush();
+
+        Odgovor response = (Odgovor) in.readObject();
+
+        if (response.getResponseStatus().equals(ResponseStatus.Error)) {
+            throw response.getExc();
+        }
+
+        return response.getData();
+    }
+
     public Prodavac login(Prodavac p) throws Exception {
         return (Prodavac) sendRequest(Operacije.login, p);
     }
-     public ArrayList<Kupac> getAllKupac() throws Exception {
+
+    public ArrayList<Kupac> getAllKupac() throws Exception {
         return (ArrayList<Kupac>) sendRequest(Operacije.getAllKupac, null);
-        
-    }
-    private Object sendRequest(int operation, Object data) throws Exception {
-        Zahtev request = new Zahtev(operation, data);
-
-        ObjectOutputStream out = new ObjectOutputStream(Sesija.getInstance().getSocket().getOutputStream());
-        out.writeObject(request);
-        out.flush();
-       
-
-        ObjectInputStream in = new ObjectInputStream(Sesija.getInstance().getSocket().getInputStream());
-        Odgovor response = (Odgovor) in.readObject();
-        
-        if (response.getResponseStatus().equals(ResponseStatus.Error)) {
-            throw response.getExc();
-        } else {
-            return response.getData();
-        }
-
     }
 
     public ArrayList<Knjiga> getAllKnjige() throws Exception {
@@ -76,7 +79,7 @@ public class KlijentKontroler {
     }
 
     public void kreirajKupca(Kupac k) throws Exception {
-         sendRequest(Operacije.kreirajKupca, k);
+        sendRequest(Operacije.kreirajKupca, k);
     }
 
     public void obrisiKupac(Kupac kupac) throws Exception {
@@ -114,8 +117,4 @@ public class KlijentKontroler {
     public void promeniRacun(Racun racun) throws Exception {
         sendRequest(Operacije.promeniRacun, racun);
     }
-
-  
-    
-   
 }

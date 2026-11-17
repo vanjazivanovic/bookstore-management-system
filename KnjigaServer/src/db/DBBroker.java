@@ -29,7 +29,11 @@ public class DBBroker {
             String url = properties.getProperty("url");
             String username = properties.getProperty("username");
             String password = properties.getProperty("password");
-            connection=DriverManager.getConnection(url, username, password);
+            System.out.println("1 - Pre povezivanja sa bazom");
+
+connection = DriverManager.getConnection(url, username, password);
+
+System.out.println("2 - Posle povezivanja sa bazom");
             connection.setAutoCommit(false);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -76,4 +80,10 @@ public class DBBroker {
         Statement s = connection.createStatement();
         s.executeUpdate(upit);
     }
+     public void deleteStavkeRacuna(long racunID) throws SQLException {
+    String upit = "DELETE FROM StavkaRacuna WHERE racunID = " + racunID;
+    System.out.println(upit);
+    Statement s = connection.createStatement();
+    s.executeUpdate(upit);
+}
 }
